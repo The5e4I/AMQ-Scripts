@@ -843,10 +843,10 @@ function setup() {
     });
 
     // request server for song info
-    // listen for new mp3 loading
-    let mp3RequestListener = new Listener("MP3 REQUESTED", (result) => {
-        // take 6 char mp3
-        // send to server
+    // listen for new song link loading
+    let mp3RequestListener = new Listener("LINK REQUESTED", (result) => {
+        // extract song link
+        // request to server
     };
 
     // retrieve song data from server
