@@ -25,7 +25,7 @@ function setup() {
         let optionsMCQ = document.getElementsByClassName("qpMultipleChoiceEntryText")
         payload.multipleChoiceNames.forEach((item, index) => {
             let variables = {
-                title: item.english
+                title: item.romaji // english or romaji
             };
             let query = `
         query ($title: String) {
