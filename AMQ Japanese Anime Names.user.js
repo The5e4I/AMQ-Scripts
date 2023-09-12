@@ -1,15 +1,13 @@
 // ==UserScript==
 // @name         AMQ Japanese Anime Names
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.1.1
 // @description  Fetch Japanese Anime Name from Anilist and replace in AMQ during answer reveal phase
 // @author       The5e4I
 // @match        https://animemusicquiz.com/*
 // @grant        none
 
 // ==/UserScript==
-
-let answerResults;
 
 // don't load on login page
 if (document.getElementById("startPage")) return;
@@ -24,7 +22,7 @@ let loadInterval = setInterval(() => {
 
 function setup() {
     // stuff to do on answer reveal
-    answerResults = new Listener("answer results", (result) => {
+    let answerResults = new Listener("answer results", (result) => {
 
         let animeID = result.songInfo.siteIds.aniListId;
 
@@ -73,11 +71,9 @@ function setup() {
         }
 
         function handleError(error) {
-            alert('Error, check console');
-            console.error(error);
+            console.error("Anime names error", error);
         }
 
 
-    });
-    answerResults.bindListener();
+    }).bindListener();
 }
