@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AMQ Japanese MCQ Options
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.1.1
 // @description  Replace multiple choice options with Japanese text
 // @author       The5e4I
 // @match        https://animemusicquiz.com/*
@@ -20,55 +20,53 @@ let loadInterval = setInterval(() => {
     }
 }, 500);
 
-function setup() {
-    let nextSongListener = new Listener("play next song", (payload) => {
-        let optionsMCQ = document.getElementsByClassName("qpMultipleChoiceEntryText")
-        payload.multipleChoiceNames.forEach((item, index) => {
-            let variables = {
-                title: item.romaji // english or romaji
-            };
-            let query = `
+const url = 'https://graphql.anilist.co';
+
+const query = `
         query ($title: String) {
           Media (search: $title, type: ANIME) {
-            id
             title {
-              romaji
-              english
               native
             }
           }
         }`;
-            let url = 'https://graphql.anilist.co',
-                options = {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        query: query,
-                        variables: variables
-                    })
-                };
 
-            fetch(url, options).then(handleResponse)
-                .then(handleData)
-                .catch(handleError);
+function setup() {
+    let nextSongListener = new Listener("play next song", (payload) => {
+        if (payload.multipleChoiceNames) {
+            let optionsMCQ = document.getElementsByClassName("qpMultipleChoiceEntryText")
+            payload.multipleChoiceNames.forEach((item, index) => {
+                let options = {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            query: query,
+                            variables: {
+                                title: item.romaji // english or romaji
+                            }
+                        })
+                    };
 
-            function handleResponse(response) {
-                return response.json().then(function (json) {
-                    return response.ok ? json : Promise.reject(json);
-                });
-            }
+                fetch(url, options).then(handleResponse)
+                    .then(handleData)
+                    .catch(handleError);
 
-            function handleData(data) {
-                let animeTitleJapanese = data.data.Media.title.native;
-                optionsMCQ[index].textContent = animeTitleJapanese;
-            }
+                function handleResponse(response) {
+                    return response.json().then(function (json) {
+                        return response.ok ? json : Promise.reject(json);
+                    });
+                }
 
-            function handleError(error) {
-                console.error("MCQ error", error);
-            }
-        });
-    }).bindListener();
+                function handleData(data) {
+                    optionsMCQ[index].textContent = data.data.Media.title.native;
+                }
+
+                function handleError(error) {
+                    console.error("MCQ error", error);
+                }
+            });
+    }}).bindListener();
 }
