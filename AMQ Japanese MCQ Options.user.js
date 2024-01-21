@@ -5,6 +5,8 @@
 // @description  Replace multiple choice options with Japanese text
 // @author       The5e4I
 // @match        https://animemusicquiz.com/*
+// @downloadURL  https://github.com/The5e4I/AMQ-Scripts/raw/main/AMQ%20Japanese%20MCQ%20Options.user.js
+// @updateURL    https://github.com/The5e4I/AMQ-Scripts/raw/main/AMQ%20Japanese%20MCQ%20Options.user.js
 // @grant        none
 
 // ==/UserScript==
