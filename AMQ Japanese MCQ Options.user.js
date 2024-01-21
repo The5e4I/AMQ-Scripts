@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AMQ Japanese MCQ Options
 // @namespace    http://tampermonkey.net/
-// @version      0.1.1
+// @version      0.1.2
 // @description  Replace multiple choice options with Japanese text
 // @author       The5e4I
 // @match        https://animemusicquiz.com/*
