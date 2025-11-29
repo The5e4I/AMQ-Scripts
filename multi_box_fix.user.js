@@ -31,7 +31,7 @@ existing bugs:
     styleEl.textContent = css;
     document.head.appendChild(styleEl);
 
-    // core routine
+    // container routine
     const cleanContainer = container => {
         const targetIcon = container.querySelector('.qpAvatarTargetIconContainer');
         const swapIcon = container.querySelector('.qpAvatarSwapIconContainer');
@@ -45,7 +45,7 @@ existing bugs:
             }
         }
 
-        // unhide players from other boxes
+        // unhide players from unselected boxes
         container.classList.remove('hide');
     };
 
@@ -63,14 +63,17 @@ existing bugs:
 
             mut.addedNodes.forEach(node => {
                 if (node.nodeType !== Node.ELEMENT_NODE) return;
+                // call container routine
                 node.querySelectorAll('.qpAvatarContainer').forEach(cleanContainer);
             });
         }
+        // reduce container height
         avatarRowParent.style.height /= 2 // doesn't work?
     });
     const scoreBoardObserver = new MutationObserver(mutations => {
         const scoreBoards = document.querySelectorAll('.qpScoreBoardGroupContainer')
         if (scoreBoards.length > 1) {
+            // unhide players from unselected boxes
             document.querySelectorAll('.qpAvatarContainerOuter.hide').forEach(el => el.classList.remove('hide'));
         }
     });
