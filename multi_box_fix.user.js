@@ -14,8 +14,8 @@ To save screen space, avatar image is removed
 After removing the avatar image, the guess textbox overlaps with the name box, so css is used to keep them separate
 
 existing bugs:
-- avatar row only shows all names after someone types something and resets every during answer reveal (and new round?)
-- avatar container height is fixed? might need to look into how height is calculated
+- avatar row only shows all names after someone types something and resets every answer reveal (and new round?)
+- avatar container height cannot be changed? might need to look into how height is calculated in the source
 */
 
 (() => {
@@ -65,7 +65,7 @@ existing bugs:
                 node.querySelectorAll('.qpAvatarContainer').forEach(cleanContainer);
             });
         }
-        avatarRowParent.style.height /= 2
+        avatarRowParent.style.height /= 2 // doesn't work?
     });
     const scoreBoardObserver = new MutationObserver(mutations => {
         const scoreBoards = document.querySelectorAll('.qpScoreBoardGroupContainer')
