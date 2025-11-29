@@ -5,6 +5,7 @@
 // @description  remove boxes for games with more than 8 players
 // @match        https://*.animemusicquiz.com/*
 // @grant        none
+// @updateURL    https://github.com/The5e4I/AMQ-Scripts/raw/master/multi_box_fix.user.js
 // ==/UserScript==
 
 /*
